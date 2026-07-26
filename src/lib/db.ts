@@ -35,6 +35,7 @@ export async function dbConnect() {
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
+      dbName: 'alou_juice',
     };
 
     cached.promise = mongoose.connect(uri, opts).then((mongooseInstance) => {

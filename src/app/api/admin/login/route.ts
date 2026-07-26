@@ -5,6 +5,8 @@ import { seedDatabase } from '@/lib/seed';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
+export const dynamic = 'force-dynamic';
+
 const JWT_SECRET = process.env.JWT_SECRET || 'alou_juice_secret_jwt_key_2026';
 
 export async function POST(req: Request) {

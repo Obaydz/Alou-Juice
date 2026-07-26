@@ -3,6 +3,8 @@ import { dbConnect } from '@/lib/db';
 import { GalleryModel } from '@/models/Schemas';
 import { verifyAdminToken } from '@/lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   const admin = verifyAdminToken(req);
   if (!admin) {

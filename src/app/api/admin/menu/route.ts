@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
     const data = await req.json();
     const { name, category, description, price, image, popular, ingredients, rimOptions } = data;
 
-    if (!name || !category || !description || !price || !image) {
+    if (!name || !description || !image) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
@@ -23,9 +23,9 @@ export async function POST(req: NextRequest) {
     const newDrink = await DrinkModel.create({
       id,
       name,
-      category,
+      category: category || 'signature',
       description,
-      price: Number(price),
+      price: Number(price) || 0,
       image,
       popular: Boolean(popular),
       ingredients: Array.isArray(ingredients) ? ingredients : (ingredients || '').split(',').map((s: string) => s.trim()).filter(Boolean),

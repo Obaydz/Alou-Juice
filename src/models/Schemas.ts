@@ -17,9 +17,9 @@ const DrinkSchema: Schema = new Schema<IDrink>(
   {
     id: { type: String, required: true, unique: true },
     name: { type: String, required: true },
-    category: { type: String, enum: ['signature', 'juices', 'smoothies'], required: true },
+    category: { type: String, enum: ['signature', 'juices', 'smoothies'], required: false, default: 'signature' },
     description: { type: String, required: true },
-    price: { type: Number, required: true },
+    price: { type: Number, required: false, default: 0 },
     image: { type: String, required: true },
     popular: { type: Boolean, default: false },
     ingredients: [{ type: String }],

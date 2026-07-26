@@ -3,6 +3,8 @@ import { dbConnect } from '@/lib/db';
 import { GalleryModel } from '@/models/Schemas';
 import { seedDatabase } from '@/lib/seed';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     await dbConnect();

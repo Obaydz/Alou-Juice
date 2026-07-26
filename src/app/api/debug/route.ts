@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { dbConnect } from '@/lib/db';
 import { DrinkModel, GalleryModel, AdminModel } from '@/models/Schemas';
+import mongoose from 'mongoose';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,6 +22,22 @@ export async function GET() {
   try {
     await dbConnect();
     result.db = 'connected';
+
+    const mongooseConn = mongoose.connection;
+    const rawDb = mongooseConn.db;
+    
+    if (rawDb) {
+      const collections = await rawDb.listCollections().toArray();
+      const collectionNames = collections.map(c => c.name);
+      
+      const countsPerCollection: Record<string, number> = {};
+      for (const name of collectionNames) {
+        countsPerCollection[name] = await rawDb.collection(name).countDocuments();
+      }
+
+      result.collections = collectionNames;
+      result.counts_per_collection = countsPerCollection;
+    }
 
     const [drinkCount, galleryCount, adminCount] = await Promise.all([
       DrinkModel.countDocuments(),

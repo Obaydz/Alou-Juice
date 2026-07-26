@@ -25,7 +25,7 @@ const DrinkSchema: Schema = new Schema<IDrink>(
     ingredients: [{ type: String }],
     rimOptions: [{ type: String }],
   },
-  { timestamps: true }
+  { timestamps: true, id: false }
 );
 
 export const DrinkModel: Model<IDrink> =

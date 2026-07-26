@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   try {
     await dbConnect();
-    const drinks = await DrinkModel.find({}).sort({ createdAt: -1 });
+    const drinks = await DrinkModel.find({}).sort({ createdAt: -1 }).lean();
     return NextResponse.json(drinks);
   } catch (error) {
     console.error('API Error /api/menu:', error);

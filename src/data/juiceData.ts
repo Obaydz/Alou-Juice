@@ -1,5 +1,6 @@
 export interface DrinkItem {
   id: string;
+  _id?: string;
   name: string;
   category: 'signature' | 'juices' | 'smoothies' | 'event';
   description: string;

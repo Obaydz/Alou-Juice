@@ -96,7 +96,7 @@ export const EventBookingSection = () => {
       msg += `-----------------------------------\n`;
       msg += `${EMOJI.list} *Boissons Sélectionnées pour l'événement:*\n`;
       
-      const chosenDrinks = availableDrinks.filter(d => selectedDrinkIds.includes(d.id || d._id || ''));
+      const chosenDrinks = availableDrinks.filter(d => selectedDrinkIds.includes(d.id || (d as any)._id || ''));
       chosenDrinks.forEach((drink, index) => {
         const isCustom = drink.id?.startsWith('custom-') || drink.tags?.includes('Sur Mesure');
         msg += `\n${index + 1}. *${drink.name}* ${isCustom ? '(Création Sur Mesure 🎨)' : ''}`;

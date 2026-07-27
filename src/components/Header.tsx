@@ -108,13 +108,13 @@ export const Header = () => {
               {BRAND_CONTACT.phone}
             </a>
 
-            {/* Event Booking CTA Button with original Panier signature pink/rose colors */}
+            {/* Event Booking CTA Button with original Panier signature pink/rose colors - Hidden on Mobile */}
             <a
               href="#events"
-              className="relative bg-gradient-to-r from-[#e63963] to-[#f472b6] text-white p-2.5 rounded-full shadow-md shadow-pink-500/25 hover:opacity-95 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 px-3.5 sm:px-4 text-xs font-bold"
+              className="hidden sm:flex relative bg-gradient-to-r from-[#e63963] to-[#f472b6] text-white p-2.5 rounded-full shadow-md shadow-pink-500/25 hover:opacity-95 hover:scale-105 active:scale-95 transition-all items-center justify-center gap-2 px-3.5 sm:px-4 text-xs font-bold"
             >
               <IconSparkles className="w-4 h-4 text-amber-200 shrink-0" />
-              <span className="hidden sm:inline">Réserver un Bar</span>
+              <span>Réserver un Bar</span>
             </a>
 
             {/* Mobile Menu Toggle Button */}

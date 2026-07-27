@@ -35,11 +35,10 @@ export const Header = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled
+        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${scrolled
             ? 'bg-white/95 backdrop-blur-md shadow-md py-2.5 border-b border-pink-100'
             : 'bg-gradient-to-b from-white/90 via-white/60 to-transparent py-4'
-        }`}
+          }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-6 lg:gap-8">
           {/* Brand Logo */}
@@ -109,20 +108,14 @@ export const Header = () => {
               {BRAND_CONTACT.phone}
             </a>
 
-            {/* Cart Button */}
-            <button
-              onClick={() => setIsCartOpen(true)}
-              aria-label="Voir le panier"
-              className="relative bg-gradient-to-r from-[#e63963] to-[#f472b6] text-white p-2.5 rounded-full shadow-md shadow-pink-500/20 hover:opacity-95 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 px-3.5 sm:px-4"
+            {/* Event Booking CTA Button with original Panier signature pink/rose colors */}
+            <a
+              href="#events"
+              className="relative bg-gradient-to-r from-[#e63963] to-[#f472b6] text-white p-2.5 rounded-full shadow-md shadow-pink-500/25 hover:opacity-95 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-2 px-3.5 sm:px-4 text-xs font-bold"
             >
-              <IconShoppingBag className="w-5 h-5" />
-              <span className="text-xs font-bold hidden sm:inline">Mon Panier</span>
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-amber-400 text-burgundy font-extrabold text-[11px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-md animate-bounce">
-                  {totalItems}
-                </span>
-              )}
-            </button>
+              <IconSparkles className="w-4 h-4 text-amber-200 shrink-0" />
+              <span className="hidden sm:inline">Réserver un Bar</span>
+            </a>
 
             {/* Mobile Menu Toggle Button */}
             <button

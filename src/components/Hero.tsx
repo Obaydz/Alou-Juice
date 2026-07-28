@@ -103,9 +103,6 @@ export const Hero = () => {
                     <span className="text-[10px] sm:text-xs text-gray-500 font-medium block truncate">Spécialité Signature</span>
                     <span className="text-xs sm:text-sm font-extrabold text-[#3a0f1d] block truncate">Golden Paradise & Sunset</span>
                   </div>
-                  <span className="bg-amber-400 text-burgundy text-[11px] sm:text-xs font-extrabold px-2.5 py-1 rounded-full shrink-0">
-                    9.50 TND
-                  </span>
                 </div>
               </div>
             </div>

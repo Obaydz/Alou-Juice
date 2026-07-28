@@ -146,27 +146,52 @@ export default function RootLayout({
     priceRange: '$$',
     servesCuisine: ['Jus Frais', 'Smoothies', 'Mocktails', 'Cocktails Artisanaux'],
     acceptsReservations: 'True',
-    hasOfferCatalog: {
-      '@type': 'OfferCatalog',
-      name: 'Menu Alou Juice & Services Événementiels',
-      itemListElement: [
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '5.0',
+      reviewCount: '48',
+      bestRating: '5',
+      worstRating: '1',
+    },
+    hasMenu: {
+      '@type': 'Menu',
+      name: 'Carte Alou Juice Bar',
+      hasMenuSection: [
         {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Charette Mobile Événementielle (Bar à Jus & Mocktails)',
-            description:
-              'Location et animation du bar mobile décoré avec verres rimés et boissons artisanales pour mariages, outia, anniversaires et événements d’entreprise.',
-          },
+          '@type': 'MenuSection',
+          name: 'Jus Frais & Smoothies Artisanaux',
+          hasMenuItem: [
+            {
+              '@type': 'MenuItem',
+              name: 'Jus Frais & Smoothies Artisanaux 100% Naturels',
+              description:
+                'Jus de fruits frais pressés minute sans conservateurs avec toppings gourmands.',
+              offers: {
+                '@type': 'Offer',
+                price: '8.50',
+                priceCurrency: 'TND',
+                availability: 'https://schema.org/InStock',
+              },
+            },
+          ],
         },
         {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Product',
-            name: 'Jus Frais & Smoothies Artisanaux 100% Naturels',
-            description:
-              'Jus de fruits frais pressés minute sans conservateurs avec toppings gourmands.',
-          },
+          '@type': 'MenuSection',
+          name: 'Service Bar Événementiel',
+          hasMenuItem: [
+            {
+              '@type': 'MenuItem',
+              name: 'Charette Mobile Événementielle (Bar à Jus & Mocktails)',
+              description:
+                'Location et animation du bar mobile décoré avec verres rimés et boissons artisanales pour mariages, outia, anniversaires et événements d’entreprise.',
+              offers: {
+                '@type': 'Offer',
+                price: '250.00',
+                priceCurrency: 'TND',
+                availability: 'https://schema.org/InStock',
+              },
+            },
+          ],
         },
       ],
     },

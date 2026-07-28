@@ -5,10 +5,12 @@ import { DrinkMixer } from '@/components/DrinkMixer';
 import { GallerySection } from '@/components/GallerySection';
 import { AboutSection } from '@/components/AboutSection';
 import { ContactSection } from '@/components/ContactSection';
+import { Analytics } from "@vercel/analytics/next"
 
 export default function Home() {
   return (
     <>
+      <Analytics />
       <Hero />
       <MenuSection />
       <EventBookingSection />

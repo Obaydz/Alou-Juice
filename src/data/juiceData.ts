@@ -55,7 +55,7 @@ export const BRAND_CONTACT = {
   owner: 'Ela Ben Khedher',
   phone: '+216 96 079 666',
   rawPhone: '21696079666',
-  email: 'aloujuice@gmail.com',
+  email: 'contact@aloujuice.tn',
   address: 'Rue Hédi Chaker, Nabeul (FP6R+WRP)',
   city: 'Nabeul, Tunisia',
   googleMapsUrl: 'https://maps.google.com/?q=FP6R+WRP,+Nabeul,+Tunisia',

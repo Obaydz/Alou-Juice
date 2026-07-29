@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyAdminToken } from '@/lib/auth';
-import { writeFile, mkdir } from 'fs/promises';
-import path from 'path';
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: NextRequest) {
   const admin = verifyAdminToken(req);
@@ -17,25 +22,22 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Aucun fichier sélectionné' }, { status: 400 });
     }
 
+    // Convert File to base64 data URI for Cloudinary
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString('base64');
+    const mimeType = file.type || 'image/jpeg';
+    const dataUri = `data:${mimeType};base64,${base64}`;
 
-    // Sanitize filename and create unique timestamped name
-    const ext = path.extname(file.name) || '.jpg';
-    const filename = `upload-${Date.now()}-${Math.random().toString(36).substring(2, 8)}${ext}`;
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(dataUri, {
+      folder: 'alou-juice',
+      resource_type: 'image',
+    });
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-
-    // Ensure uploads directory exists
-    await mkdir(uploadDir, { recursive: true });
-
-    const filePath = path.join(uploadDir, filename);
-    await writeFile(filePath, buffer);
-
-    const publicUrl = `/uploads/${filename}`;
-    return NextResponse.json({ success: true, url: publicUrl });
+    return NextResponse.json({ success: true, url: result.secure_url });
   } catch (error) {
     console.error('Upload Error:', error);
-    return NextResponse.json({ error: 'Échec du téléchargement de l’image' }, { status: 500 });
+    return NextResponse.json({ error: 'Échec du téléchargement de l\'image' }, { status: 500 });
   }
 }

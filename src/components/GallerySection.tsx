@@ -91,6 +91,35 @@ export const GallerySection = () => {
     </div>
   );
 
+  const activeIndex = activeImage ? galleryImages.findIndex((img) => img.src === activeImage.src) : -1;
+
+  const handleNextImage = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (activeIndex !== -1) {
+      const nextIdx = (activeIndex + 1) % galleryImages.length;
+      setActiveImage(galleryImages[nextIdx]);
+    }
+  };
+
+  const handlePrevImage = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (activeIndex !== -1) {
+      const prevIdx = (activeIndex - 1 + galleryImages.length) % galleryImages.length;
+      setActiveImage(galleryImages[prevIdx]);
+    }
+  };
+
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!activeImage) return;
+      if (e.key === 'Escape') setActiveImage(null);
+      if (e.key === 'ArrowRight') handleNextImage();
+      if (e.key === 'ArrowLeft') handlePrevImage();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeImage, activeIndex, galleryImages]);
+
   return (
     <section id="gallery" className="py-16 sm:py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -128,7 +157,7 @@ export const GallerySection = () => {
 
       {/* Full Gallery Modal */}
       {isFullGalleryOpen && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-white rounded-3xl max-w-5xl w-full h-[85vh] flex flex-col shadow-2xl overflow-hidden border border-pink-100 animate-in fade-in zoom-in duration-200">
             {/* Modal Header */}
             <div className="p-6 border-b border-pink-100 flex items-center justify-between bg-gradient-to-r from-pink-50 via-white to-amber-50 shrink-0">
@@ -159,25 +188,85 @@ export const GallerySection = () => {
 
       {/* Lightbox Modal */}
       {activeImage && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="relative max-w-4xl w-full bg-white rounded-3xl overflow-hidden shadow-2xl">
+        <div
+          className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-6 animate-in fade-in duration-300 select-none"
+          onClick={() => setActiveImage(null)}
+        >
+          {/* Top Bar */}
+          <div className="flex items-center justify-between w-full max-w-5xl mx-auto z-10 shrink-0">
+            <span className="bg-white/10 text-white backdrop-blur-md px-4 py-1.5 rounded-full border border-white/20 text-xs font-semibold flex items-center gap-2 shadow-lg">
+              <IconSparkles className="w-3.5 h-3.5 text-amber-400" />
+              Photo {activeIndex + 1} sur {galleryImages.length}
+            </span>
             <button
-              onClick={() => setActiveImage(null)}
-              className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black text-white p-2 rounded-full backdrop-blur-md transition-colors"
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveImage(null);
+              }}
+              className="bg-white/10 hover:bg-white/20 text-white p-2.5 rounded-full backdrop-blur-md transition-all border border-white/20 hover:scale-105 active:scale-95 shadow-lg"
+              aria-label="Fermer"
             >
-              <IconClose className="w-6 h-6" />
+              <IconClose className="w-5 h-5" />
             </button>
-            <div className="relative h-[65vh] w-full bg-black">
+          </div>
+
+          {/* Main Stage */}
+          <div className="relative flex-1 flex items-center justify-center my-4 w-full max-w-5xl mx-auto">
+            {/* Prev Button */}
+            {galleryImages.length > 1 && (
+              <button
+                onClick={handlePrevImage}
+                className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-[#e63963] text-white p-3 sm:p-4 rounded-full backdrop-blur-md border border-white/20 transition-all shadow-2xl hover:scale-110 active:scale-90"
+                aria-label="Photo précédente"
+              >
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
+
+            {/* Photo Card Container */}
+            <div
+              className="relative h-[65vh] sm:h-[72vh] w-full max-w-xs sm:max-w-sm rounded-[2.5rem] overflow-hidden border-2 border-white/20 shadow-2xl shadow-[#e63963]/20 bg-gray-950 flex items-center justify-center cursor-default"
+              onClick={(e) => e.stopPropagation()}
+            >
               <Image
                 src={activeImage.src}
                 alt={activeImage.title}
                 fill
-                className="object-contain"
+                className="object-cover sm:object-contain transition-all duration-300"
+                priority
               />
             </div>
-            <div className="p-6 bg-white space-y-1">
-              <h3 className="font-serif-heading text-xl font-bold text-[#3a0f1d]">{activeImage.title}</h3>
-              <p className="text-sm text-gray-600">{activeImage.desc}</p>
+
+            {/* Next Button */}
+            {galleryImages.length > 1 && (
+              <button
+                onClick={handleNextImage}
+                className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-[#e63963] text-white p-3 sm:p-4 rounded-full backdrop-blur-md border border-white/20 transition-all shadow-2xl hover:scale-110 active:scale-90"
+                aria-label="Photo suivante"
+              >
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+          </div>
+
+          {/* Bottom Caption Card */}
+          <div
+            className="w-full max-w-md mx-auto z-10 shrink-0"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl p-4 text-center text-white shadow-2xl space-y-1">
+              <h3 className="font-serif-heading text-base sm:text-lg font-bold text-amber-300 leading-snug">
+                {activeImage.title}
+              </h3>
+              {activeImage.desc && (
+                <p className="text-xs sm:text-sm text-gray-200 leading-relaxed font-light">
+                  {activeImage.desc}
+                </p>
+              )}
             </div>
           </div>
         </div>

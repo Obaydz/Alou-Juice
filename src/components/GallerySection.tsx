@@ -30,7 +30,7 @@ const GALLERY_IMAGES = [
 export const GallerySection = () => {
   const [activeImage, setActiveImage] = useState<typeof GALLERY_IMAGES[0] | null>(null);
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<typeof GALLERY_IMAGES>(GALLERY_IMAGES);
+  const [galleryImages, setGalleryImages] = useState<typeof GALLERY_IMAGES>([]);
 
   React.useEffect(() => {
     fetch('/api/gallery')
@@ -71,7 +71,7 @@ export const GallerySection = () => {
   return (
     <section id="gallery" className="py-16 sm:py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
           <span className="font-script text-3xl text-[#e63963] block">Notre Univers Visuel</span>

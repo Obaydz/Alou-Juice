@@ -53,8 +53,4 @@ export async function seedDatabase() {
 
   // 3. Seed Gallery if empty
   const galleryCount = await GalleryModel.countDocuments();
-  if (galleryCount === 0) {
-    await GalleryModel.insertMany(INITIAL_GALLERY);
-    console.log(`[Seed] Seeded ${INITIAL_GALLERY.length} gallery items into MongoDB`);
-  }
 }

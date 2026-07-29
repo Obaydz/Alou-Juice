@@ -15,7 +15,7 @@ export const AboutSection = () => {
           <div className="lg:col-span-5 relative">
             <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <Image
-                src="/assets/WhatsApp-Image-2026-07-29-at-20.28.05_050972ce.jpg"
+                src="/assets/WhatsApp Image 2026-07-29 at 5.38.08 PM.jpeg"
                 alt="Ela Ben Khedher Alou Juice"
                 fill
                 className="object-cover"

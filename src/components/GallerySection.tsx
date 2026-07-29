@@ -68,13 +68,6 @@ export const GallerySection = () => {
           fill
           className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
         />
-        
-        {/* Subtle top badge */}
-        <div className="absolute top-3 right-3 z-10">
-          <span className="bg-black/40 backdrop-blur-md text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-sm">
-            <IconSparkles className="w-3 h-3 text-amber-400" /> Photo Réelle
-          </span>
-        </div>
 
         {/* Center zoom icon on hover */}
         <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">

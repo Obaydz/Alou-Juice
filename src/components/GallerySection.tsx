@@ -68,6 +68,79 @@ export const GallerySection = () => {
     </div>
   );
 
+  const renderPhoneCard = (img: typeof GALLERY_IMAGES[0], i: number) => (
+    <div key={i} className="flex flex-col items-center gap-4">
+      {/* Phone Frame */}
+      <div
+        onClick={() => setActiveImage(img)}
+        className="relative cursor-pointer group"
+        style={{ width: 220, height: 440 }}
+      >
+        {/* Outer bezel */}
+        <div
+          className="absolute inset-0 rounded-[3rem] shadow-2xl"
+          style={{
+            background: 'linear-gradient(145deg, #2a2a2e 0%, #1a1a1c 40%, #111113 100%)',
+            boxShadow: '0 30px 60px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12), 0 0 0 1px rgba(255,255,255,0.08)'
+          }}
+        />
+        {/* Side volume buttons */}
+        <div className="absolute -left-[3px] top-24 w-[3px] h-8 rounded-l-sm" style={{ background: '#222224' }} />
+        <div className="absolute -left-[3px] top-36 w-[3px] h-8 rounded-l-sm" style={{ background: '#222224' }} />
+        {/* Side power button */}
+        <div className="absolute -right-[3px] top-28 w-[3px] h-10 rounded-r-sm" style={{ background: '#222224' }} />
+        {/* Screen area */}
+        <div
+          className="absolute overflow-hidden"
+          style={{
+            top: 10,
+            left: 10,
+            right: 10,
+            bottom: 10,
+            borderRadius: '2.4rem',
+            background: '#000'
+          }}
+        >
+          <Image
+            src={img.src}
+            alt={img.title}
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          {/* Screen overlay on hover */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4">
+            <span className="text-amber-400 text-[10px] font-bold flex items-center gap-1 mb-0.5">
+              <IconSparkles className="w-3 h-3" /> Photo Réelle
+            </span>
+            <h4 className="font-serif-heading font-bold text-sm text-white leading-tight">{img.title}</h4>
+          </div>
+          {/* Top notch */}
+          <div
+            className="absolute top-2 left-1/2 -translate-x-1/2 z-10"
+            style={{
+              width: 72,
+              height: 20,
+              background: '#000',
+              borderRadius: '0 0 1rem 1rem'
+            }}
+          >
+            {/* Speaker */}
+            <div className="absolute top-[6px] left-1/2 -translate-x-1/2" style={{ width: 28, height: 4, background: '#1a1a1a', borderRadius: 4 }} />
+            {/* Camera dot */}
+            <div className="absolute top-[5px] right-2" style={{ width: 6, height: 6, background: '#1a1a1a', borderRadius: '50%' }} />
+          </div>
+          {/* Home bar */}
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2" style={{ width: 60, height: 4, background: 'rgba(255,255,255,0.35)', borderRadius: 4 }} />
+        </div>
+      </div>
+      {/* Caption below phone */}
+      <div className="text-center px-2">
+        <h4 className="font-serif-heading font-bold text-[#3a0f1d] text-sm leading-tight">{img.title}</h4>
+        <p className="text-xs text-gray-500 mt-0.5 line-clamp-2">{img.desc}</p>
+      </div>
+    </div>
+  );
+
   return (
     <section id="gallery" className="py-16 sm:py-20 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -83,9 +156,9 @@ export const GallerySection = () => {
           </p>
         </div>
 
-        {/* Gallery Grid - Compact Preview */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {previewImages.map(renderGalleryCard)}
+        {/* Gallery Grid - Phone Frame Preview */}
+        <div className="flex flex-wrap justify-center gap-10">
+          {previewImages.map(renderPhoneCard)}
         </div>
 
         {/* Explore Full Gallery Button */}

@@ -30,7 +30,7 @@ const GALLERY_IMAGES = [
 export const GallerySection = () => {
   const [activeImage, setActiveImage] = useState<typeof GALLERY_IMAGES[0] | null>(null);
   const [isFullGalleryOpen, setIsFullGalleryOpen] = useState(false);
-  const [galleryImages, setGalleryImages] = useState<typeof GALLERY_IMAGES>([]);
+  const [galleryImages, setGalleryImages] = useState<typeof GALLERY_IMAGES>(GALLERY_IMAGES);
 
   React.useEffect(() => {
     fetch('/api/gallery')
@@ -43,50 +43,57 @@ export const GallerySection = () => {
       .catch((err) => console.error('Failed to load gallery from MongoDB:', err));
   }, []);
 
-  const PREVIEW_LIMIT = 2;
+  const PREVIEW_LIMIT = 3;
   const previewImages = galleryImages.slice(0, PREVIEW_LIMIT);
 
-  const renderGalleryCard = (img: typeof GALLERY_IMAGES[0], i: number) => (
-    <div
-      key={i}
-      onClick={() => setActiveImage(img)}
-      className="relative h-72 rounded-3xl overflow-hidden group cursor-pointer shadow-lg border border-pink-100"
-    >
-      <Image
-        src={img.src}
-        alt={img.title}
-        fill
-        className="object-cover group-hover:scale-110 transition-transform duration-700"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90 group-hover:opacity-100 transition-opacity p-6 flex flex-col justify-end text-white">
-        <span className="text-amber-400 text-xs font-bold flex items-center gap-1 mb-1">
-          <IconSparkles className="w-3.5 h-3.5" /> Photo Réelle
-        </span>
-        <h4 className="font-serif-heading font-bold text-lg leading-tight">{img.title}</h4>
-        <p className="text-xs text-gray-200 mt-1 line-clamp-2">{img.desc}</p>
-      </div>
-    </div>
-  );
+
 
   const renderPortraitCard = (img: typeof GALLERY_IMAGES[0], i: number) => (
     <div
       key={i}
+      className="p-[3px] rounded-[2rem] group cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#e63963]/30"
+      style={{
+        background: 'linear-gradient(135deg, #e63963 0%, #ff8400 50%, #e63963 100%)',
+        boxShadow: '0 15px 35px -5px rgba(230, 57, 99, 0.2), 0 8px 16px -6px rgba(0, 0, 0, 0.08)'
+      }}
       onClick={() => setActiveImage(img)}
-      className="relative w-56 rounded-3xl overflow-hidden group cursor-pointer shadow-xl border border-pink-100"
-      style={{ aspectRatio: '3/5' }}
     >
-      <Image
-        src={img.src}
-        alt={img.title}
-        fill
-        className="object-cover group-hover:scale-105 transition-transform duration-700"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 p-5 flex flex-col justify-end text-white">
-        <span className="text-amber-400 text-[10px] font-bold flex items-center gap-1 mb-1">
-          <IconSparkles className="w-3 h-3" /> Photo Réelle
-        </span>
-        <h4 className="font-serif-heading font-bold text-sm leading-tight">{img.title}</h4>
-        <p className="text-[11px] text-gray-200 mt-1 line-clamp-2">{img.desc}</p>
+      <div
+        className="relative w-60 sm:w-64 overflow-hidden rounded-[1.85rem] bg-gray-900"
+        style={{ aspectRatio: '3/5' }}
+      >
+        <Image
+          src={img.src}
+          alt={img.title}
+          fill
+          className="object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+        />
+        
+        {/* Subtle top badge */}
+        <div className="absolute top-3 right-3 z-10">
+          <span className="bg-black/40 backdrop-blur-md text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-white/20 flex items-center gap-1 shadow-sm">
+            <IconSparkles className="w-3 h-3 text-amber-400" /> Photo Réelle
+          </span>
+        </div>
+
+        {/* Center zoom icon on hover */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          <div className="w-12 h-12 rounded-full bg-black/50 backdrop-blur-md border border-white/30 flex items-center justify-center text-white shadow-xl scale-75 group-hover:scale-100 transition-transform duration-300">
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+            </svg>
+          </div>
+        </div>
+
+        {/* Dynamic Glassmorphic Bottom Caption */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/90 via-black/50 to-transparent backdrop-blur-[2px] transition-all duration-300">
+          <h4 className="font-serif-heading font-bold text-sm text-white leading-snug drop-shadow-md group-hover:text-amber-200 transition-colors">
+            {img.title}
+          </h4>
+          <p className="text-[11px] text-gray-200 mt-1 line-clamp-2 leading-relaxed opacity-85 group-hover:opacity-100 transition-opacity">
+            {img.desc}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -96,7 +103,7 @@ export const GallerySection = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-10 space-y-3">
+        <div className="text-center max-w-3xl mx-auto mb-12 space-y-3">
           <span className="font-script text-3xl text-[#e63963] block">Notre Univers Visuel</span>
           <h2 className="font-serif-heading text-3xl sm:text-4xl font-extrabold text-[#3a0f1d]">
             Galerie Photos du Juice Bar & Événements
@@ -106,8 +113,8 @@ export const GallerySection = () => {
           </p>
         </div>
 
-        {/* Gallery Grid - Portrait Preview */}
-        <div className="flex flex-wrap justify-center gap-8">
+        {/* Gallery Grid - Styled Vertical Portrait Preview Cards */}
+        <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8">
           {previewImages.map(renderPortraitCard)}
         </div>
 
@@ -149,8 +156,8 @@ export const GallerySection = () => {
 
             {/* Modal Grid Content */}
             <div className="flex-1 overflow-y-auto p-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {galleryImages.map(renderGalleryCard)}
+              <div className="flex flex-wrap justify-center gap-6">
+                {galleryImages.map(renderPortraitCard)}
               </div>
             </div>
           </div>

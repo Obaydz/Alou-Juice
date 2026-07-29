@@ -10,12 +10,12 @@ export const AboutSection = () => {
     <section className="py-20 bg-gradient-to-b from-amber-50/40 via-white to-pink-50/40 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          
+
           {/* Image side */}
           <div className="lg:col-span-5 relative">
             <div className="relative w-full aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
               <Image
-                src="/assets/cart-2.jpg"
+                src="/assets/WhatsApp-Image-2026-07-29-at-20.28.05_050972ce.jpg"
                 alt="Ela Ben Khedher Alou Juice"
                 fill
                 className="object-cover"
